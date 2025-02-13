@@ -1,0 +1,67 @@
+﻿@page
+@model _234191F_AS_Assignment1.Pages.LoginModel
+@{
+    var registrationMessage = TempData["RegistrationSuccess"] as string;
+}
+@if (!string.IsNullOrEmpty(registrationMessage))
+{
+    <div class="alert alert-success">
+        @registrationMessage
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <h2 class="mb-3">Login</h2>
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="LModel.Email">Email Address</label>
+                    <input type="email" asp-for="LModel.Email" class="form-control" />
+                    <span asp-validation-for="LModel.Email" class="text-danger"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="LModel.Password">Password</label>
+                    <input type="password" asp-for="LModel.Password" class="form-control" />
+                    <span asp-validation-for="LModel.Password" class="text-danger"></span>
+                </div>
+
+                <!-- Remember Me -->
+                <div class="mb-3 form-check">
+                    <input type="checkbox" asp-for="LModel.RememberMe" class="form-check-input" />
+                    <label class="form-check-label" for="RememberMe">Remember me</label>
+                </div>
+                <!-- Hidden reCAPTCHA Response Field -->
+                    <input type="hidden" id="recaptchaResponse" name="recaptchaResponse" />
+
+                <!-- Submit Button -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </div>
+            </form>
+            <!-- Link to Request Password Reset -->
+            <p>Forgot your password? <a href="@Url.Page("/Account/RequestResetPassword")">Request a password reset</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+         <script src="https://www.google.com/recaptcha/api.js?render=@Model.reCAPTCHASiteKey"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('@Model.reCAPTCHASiteKey', { action: 'login' }).then(function(token) {
+                console.log("reCAPTCHA Token:", token);  // Log the token to verify it's generated
+                document.getElementById('recaptchaResponse').value = token;
+            });
+        });
+    </script>
+
+
+
+}

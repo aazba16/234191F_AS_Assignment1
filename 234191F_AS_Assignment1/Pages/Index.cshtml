@@ -1,0 +1,29 @@
+﻿@page
+@model _234191F_AS_Assignment1.Pages.IndexModel
+
+@if (TempData["MultipleLogins"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["MultipleLogins"]
+    </div>
+}
+
+
+<h1>Welcome, @Model.FullName</h1>
+
+<p>Email: @Html.Encode(Model.UserEmail)</p>
+<p>Mobile Number: @Html.Encode(Model.MobileNumber)</p>
+<p>Delivery Address: @Html.Encode(Model.DeliveryAddress)</p>
+<p>About Me: @Html.Encode(Model.AboutMe)</p>
+
+<p>Credit Card Number (Encrypted): @Html.Encode(Model.DecryptedCreditCardNo)</p>
+
+@if (!string.IsNullOrEmpty(Model.PhotoPath))
+{
+    <div>
+        <img src="@Html.Encode(Model.PhotoPath)" alt="User Photo" style="width:150px; height:auto;" />
+    </div>
+}
+<a href="/Account/ChangePassword">Change Password</a>
+<!-- Link to Manage Account Page -->
+<a href="@Url.Page("/Account/Manage")" class="btn btn-primary">Manage Account</a>

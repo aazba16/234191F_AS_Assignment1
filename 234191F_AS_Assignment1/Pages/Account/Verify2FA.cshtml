@@ -1,0 +1,28 @@
+﻿@page
+@model _234191F_AS_Assignment1.Pages.Account.Verify2FAModel
+
+@{
+    ViewData["Title"] = "Verify Two-Factor Authentication";
+}
+
+<h2>Verify Two-Factor Authentication</h2>
+
+<p>Enter the 6-digit code from your authenticator app:</p>
+
+<form method="post">
+    <div class="form-group">
+        <label for="TwoFactorCode">OTP Code:</label>
+        <input type="text" class="form-control" id="TwoFactorCode" name="TwoFactorCode" placeholder="Enter code" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Verify</button>
+</form>
+
+@if (ModelState.ErrorCount > 0)
+{
+        <div class="alert alert-danger mt-2">
+        @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+        {
+                    <p>@error.ErrorMessage</p>
+        }
+        </div>
+}

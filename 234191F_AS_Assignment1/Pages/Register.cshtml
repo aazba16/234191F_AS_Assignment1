@@ -1,0 +1,141 @@
+﻿@page
+@model _234191F_AS_Assignment1.Pages.RegisterModel
+@{
+}
+
+<script>
+    function checkPasswordStrength() {
+        var password = document.getElementById("Password").value;
+        var strengthBar = document.getElementById("passwordStrength");
+
+        // Password strength rules
+        var strength = 0;
+
+        if (password.length >= 8) {
+            strength++;
+        }
+        if (/[A-Z]/.test(password)) {
+            strength++;
+        }
+        if (/[0-9]/.test(password)) {
+            strength++;
+        }
+        if (/[^A-Za-z0-9]/.test(password)) {
+            strength++;
+        }
+
+        // Provide feedback on password strength
+        if (strength === 0) {
+            strengthBar.textContent = "Very Weak";
+            strengthBar.style.color = "red";
+        } else if (strength === 1) {
+            strengthBar.textContent = "Weak";
+            strengthBar.style.color = "orange";
+        } else if (strength === 2) {
+            strengthBar.textContent = "Medium";
+            strengthBar.style.color = "yellow";
+        } else if (strength === 3) {
+            strengthBar.textContent = "Strong";
+            strengthBar.style.color = "green";
+        }
+    }
+</script>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-12 col-lg-6">
+            <h1 class="mb-3">Register</h1>
+
+            <!-- Registration Form -->
+            <form method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <!-- Full Name -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.FullName">Full Name</label>
+                    <input type="text" asp-for="RModel.FullName" class="form-control" required />
+                    <span asp-validation-for="RModel.FullName" class="text-danger"></span>
+                </div>
+
+                <!-- Credit Card Number (Encrypted) -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.CreditCardNo">Credit Card Number</label>
+                    <input type="text" asp-for="RModel.CreditCardNo" class="form-control" required placeholder="1234-5678-9102-3456"/>
+                    <span asp-validation-for="RModel.CreditCardNo" class="text-danger"></span>
+                </div>
+
+                <!-- Gender Selection -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Gender">Gender</label>
+                    <select asp-for="RModel.Gender" class="form-control">
+                        <option value="">-- Select Gender --</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <span asp-validation-for="RModel.Gender" class="text-danger"></span>
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.MobileNumber">Mobile Number</label>
+                    <input type="text" asp-for="RModel.MobileNumber" class="form-control" required />
+                    <span asp-validation-for="RModel.MobileNumber" class="text-danger"></span>
+                </div>
+
+
+                <!-- Delivery Address -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.DeliveryAddress">Delivery Address</label>
+                    <textarea asp-for="RModel.DeliveryAddress" class="form-control" required></textarea>
+                    <span asp-validation-for="RModel.DeliveryAddress" class="text-danger"></span>
+                </div>
+
+                <!-- Email Address -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Email">Email Address</label>
+                    <input type="email" asp-for="RModel.Email" class="form-control" required />
+                    <span asp-validation-for="RModel.Email" class="text-danger"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Password">Password</label>
+                    <input type="password" asp-for="RModel.Password" class="form-control" onkeyup="checkPasswordStrength()" id="Password" />
+                    <span id="passwordStrength" class="text-danger"></span>
+                    <span asp-validation-for="RModel.Password" class="text-danger"></span>
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
+                    <input type="password" asp-for="RModel.ConfirmPassword" class="form-control" required />
+                    <span asp-validation-for="RModel.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <!-- Photo Upload (JPG Only) -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Photo">Upload Profile Photo (JPG Only)</label>
+                    <input type="file" asp-for="RModel.Photo" class="form-control" accept=".jpg,.jpeg" required />
+                    <span asp-validation-for="RModel.Photo" class="text-danger"></span>
+                </div>
+
+                <!-- About Me -->
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.AboutMe">About Me</label>
+                    <textarea asp-for="RModel.AboutMe" class="form-control"></textarea>
+                    <span asp-validation-for="RModel.AboutMe" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </div>
+            </form>
+            <!-- End of Form -->
+        </div>
+    </div>
+</div>
