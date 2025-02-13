@@ -47,12 +47,9 @@ namespace _234191F_AS_Assignment1.Pages.Account
                 values: new { token = token, email = Input.Email },
                 protocol: Request.Scheme);
 
-            // Encode the reset URL
-            var encodedResetUrl = System.Net.WebUtility.HtmlEncode(resetUrl);
-
             // Send email with reset link
             var subject = "Password Reset Request";
-            var message = $"Please reset your password by clicking <a href='{encodedResetUrl}'>here</a>";
+            var message = $"Please reset your password by clicking <a href='{resetUrl}'>here</a>";
             await _emailSender.SendEmailAsync(Input.Email, subject, message);
 
             // Redirect to a confirmation page after sending the reset email
